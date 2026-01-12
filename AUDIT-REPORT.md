@@ -128,9 +128,34 @@ The counter accounting is mathematically correct. Every `atomic_inc()` has exact
 
 ## Remaining Verification
 
-- [ ] Observe actual backpressure (return 0) under extreme TX load
+- [x] Observe actual backpressure (return 0) under extreme TX load - **VERIFIED 2026-01-11**
 - [ ] Teardown-under-load test (unplug during active TX)
 - [ ] 3x repeated identical stress tests
+
+---
+
+## Backpressure Verification (2026-01-11)
+
+**Test Setup:**
+- Max URBs per channel: 4 (reduced from 32 to force backpressure)
+- Connected to phone hotspot
+- Flood ping through USB adapter: `ping -f -I wlp0s13f0u2 -s 1400 10.63.200.231`
+
+**Results:**
+```
+[41241.517941] rtw89_8852au_git: TX flow ctrl: BACKPRESSURE ch=0 inflight=4
+[41241.541948] rtw89_8852au_git: TX flow ctrl: BACKPRESSURE ch=0 inflight=4
+... (40+ events)
+```
+
+**Verification:**
+- Channel 0 (data channel) correctly hit max inflight=4
+- Driver returned 0 to mac80211, signaling "stop sending"
+- **Zero underflow warnings**
+- **Zero overflow warnings**
+- Traffic continued after completions freed slots
+
+**Conclusion:** TX flow control backpressure mechanism is **VERIFIED WORKING**.
 
 ---
 

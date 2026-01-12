@@ -73,3 +73,20 @@ Read [RESEARCH.md](RESEARCH.md) for full context.
 
 - [morrownr/rtw89](https://github.com/morrownr/rtw89) — Development target
 - [Lucid-Duck/tx-resources-flow-control](https://github.com/Lucid-Duck/tx-resources-flow-control) — This project
+
+---
+
+## Project Philosophy
+
+**Work in silence. Arrive with solutions.**
+
+This project operates independently until we have:
+- Working, tested implementations
+- Comprehensive documentation
+- Proven results
+
+Only then do we engage with upstream maintainers. The goal is twofold:
+1. Contribute meaningful fixes to the Linux WiFi ecosystem
+2. Demonstrate what focused AI+human collaboration can achieve
+
+No RFCs. No "what do you think?" No permission-seeking. Just results.

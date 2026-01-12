@@ -1,0 +1,412 @@
+=== STRESS TEST START: Mon 12 Jan 2026 12:34:20 PM PST ===
+Interface: wlp0s13f0u2
+Gateway: 10.63.200.231
+Iterations: 100
+
+=== Run 1/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 2/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 3/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 4/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 5/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 6/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 7/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 8/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 9/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 10/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 11/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 12/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 13/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 14/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 15/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 16/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 17/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 18/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 19/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 20/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 21/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 22/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 23/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 24/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 25/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 26/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 27/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 28/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 29/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 30/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 31/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 32/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 33/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 34/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 35/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 36/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 37/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 38/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 39/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 40/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 41/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 42/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 43/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 44/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 45/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 46/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 47/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 48/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 49/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 50/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 51/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 52/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 53/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 54/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 55/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 56/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 57/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 58/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 59/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 60/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 61/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 62/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 63/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 64/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 65/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 66/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 67/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 68/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 69/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 70/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 71/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 72/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 73/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 74/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 75/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 76/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 77/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 78/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 79/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 80/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 81/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 82/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 83/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 84/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 85/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 86/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 87/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 88/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 89/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 90/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 91/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 92/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 93/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 94/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 95/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 96/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 97/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 98/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 99/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+=== Run 100/100 ===
+PING 10.63.200.231 (10.63.200.231) from 10.63.200.201 wlp0s13f0u2: 1400(1428) bytes of data.
+/tmp/stress_test.sh: line 19: [: 0
+0: integer expected
+
+=== STRESS TEST COMPLETE: Mon 12 Jan 2026 12:51:02 PM PST ===
+Total iterations: 100
+Total warnings: 0
+
+=== Final dmesg check ===
+No flow control warnings found

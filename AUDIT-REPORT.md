@@ -130,7 +130,7 @@ The counter accounting is mathematically correct. Every `atomic_inc()` has exact
 
 - [x] Observe actual backpressure (return 0) under extreme TX load - **VERIFIED 2026-01-11**
 - [x] Teardown-under-load test (unplug during active TX) - **PASSED 2026-01-11**
-- [ ] 3x repeated identical stress tests
+- [x] 3x repeated identical stress tests - **PASSED 2026-01-11** (after race fix)
 
 ---
 
@@ -180,6 +180,91 @@ The counter accounting is mathematically correct. Every `atomic_inc()` has exact
 - "timed out to flush queues" is expected (device gone)
 
 **Conclusion:** Driver handles hot-unplug during TX **gracefully**.
+
+---
+
+## Race Condition Discovery & Fix (2026-01-11)
+
+**Problem Discovered:**
+During stress tests, observed sporadic warnings:
+```
+TX flow ctrl: decrement when inflight=0 ch=0 urb_status=0
+```
+
+**Root Cause Analysis:**
+Original code had increment AFTER `write_port()`:
+```c
+ret = rtw89_usb_write_port(...);
+if (ret) {
+    // error handling
+} else {
+    atomic_inc(&rtwusb->tx_inflight[txch]);  // <- BUG: Too late!
+}
+```
+
+The race condition:
+1. `write_port()` submits URB to USB core
+2. USB core immediately completes the URB (fast path)
+3. Completion callback runs on different CPU, calls `atomic_dec()`
+4. **RACE:** Decrement happens BEFORE increment!
+5. Result: `inflight` goes 0 → -1 → 0 (instead of 0 → 1 → 0)
+
+**The Fix:**
+Move increment BEFORE submit, with rollback on failure:
+```c
+/* Increment BEFORE submit to avoid race with completion callback */
+if (txch != RTW89_TXCH_CH12)
+    atomic_inc(&rtwusb->tx_inflight[txch]);
+
+ret = rtw89_usb_write_port(...);
+if (ret) {
+    /* Undo increment on failure */
+    if (txch != RTW89_TXCH_CH12)
+        atomic_dec(&rtwusb->tx_inflight[txch]);
+    // error handling
+}
+```
+
+**Updated Path Analysis:**
+
+### Path 1: Submit Fails (Updated)
+```
+rtw89_usb_ops_tx_kick_off()
+  → atomic_inc() ← PRE-INCREMENT
+  → rtw89_usb_write_port() returns error
+  → atomic_dec() ← UNDO
+  → Resources cleaned up
+```
+**Result:** Increment then immediate decrement. BALANCED.
+
+### Path 2: Submit Succeeds (Updated)
+```
+rtw89_usb_ops_tx_kick_off()
+  → atomic_inc() ← PRE-INCREMENT
+  → rtw89_usb_write_port() returns 0
+  → [Completion may fire immediately or later]
+  → rtw89_usb_write_port_complete() called
+  → atomic_dec() ← DECREMENT
+```
+**Result:** Race-free! Increment always before any possible decrement. BALANCED.
+
+---
+
+## 3x Stress Test Results (2026-01-11)
+
+**Test Setup:**
+- Max URBs per channel: 32 (production setting)
+- Connected to phone hotspot
+- 30-second flood ping per test: `ping -f -I wlp0s13f0u2 -s 1400 10.63.200.231`
+
+**Results:**
+| Test | Duration | Underflow | Overflow | Warnings |
+|------|----------|-----------|----------|----------|
+| 1/3  | 30s      | 0         | 0        | NONE     |
+| 2/3  | 30s      | 0         | 0        | NONE     |
+| 3/3  | 30s      | 0         | 0        | NONE     |
+
+**Conclusion:** Race condition fix **VERIFIED WORKING**. Zero warnings across 90 seconds of sustained high-throughput TX.
 
 ---
 

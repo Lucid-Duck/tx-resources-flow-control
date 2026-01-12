@@ -129,7 +129,7 @@ The counter accounting is mathematically correct. Every `atomic_inc()` has exact
 ## Remaining Verification
 
 - [x] Observe actual backpressure (return 0) under extreme TX load - **VERIFIED 2026-01-11**
-- [ ] Teardown-under-load test (unplug during active TX)
+- [x] Teardown-under-load test (unplug during active TX) - **PASSED 2026-01-11**
 - [ ] 3x repeated identical stress tests
 
 ---
@@ -156,6 +156,30 @@ The counter accounting is mathematically correct. Every `atomic_inc()` has exact
 - Traffic continued after completions freed slots
 
 **Conclusion:** TX flow control backpressure mechanism is **VERIFIED WORKING**.
+
+---
+
+## Teardown-Under-Load Test (2026-01-11)
+
+**Test Setup:**
+- Flood ping running through USB adapter
+- Physically unplugged USB adapter during active TX
+
+**Results:**
+```
+[42084.407729] usb 2-2: USB disconnect, device number 9
+[42084.415729] wlp0s13f0u2: deauthenticating from da:ad:b1:2f:ce:9e
+[42084.936617] rtw89_8852au_git: timed out to flush queues
+```
+
+**Verification:**
+- No kernel panic
+- No crash or hang
+- No BUG/OOPS messages
+- No counter underflow/overflow
+- "timed out to flush queues" is expected (device gone)
+
+**Conclusion:** Driver handles hot-unplug during TX **gracefully**.
 
 ---
 

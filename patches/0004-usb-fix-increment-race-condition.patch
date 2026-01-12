@@ -1,4 +1,4 @@
-From: Claude Opus 4.5 <noreply@anthropic.com>
+From: Lucid-Duck <uglytoiletduck@gmail.com>
 Subject: [PATCH 4/4] usb: fix increment/decrement race condition
 
 Move atomic_inc() BEFORE usb_submit_urb() to prevent race with completion
@@ -18,7 +18,7 @@ Fix: Pre-increment before submit, rollback on failure.
 Discovered via debug instrumentation showing:
   "TX flow ctrl: decrement when inflight=0 ch=0"
 
-Signed-off-by: Claude Opus 4.5 <noreply@anthropic.com>
+Signed-off-by: Lucid-Duck <uglytoiletduck@gmail.com>
 ---
  rtw89/usb.c | 14 ++++++++------
  rtw89/usb.h |  2 +-

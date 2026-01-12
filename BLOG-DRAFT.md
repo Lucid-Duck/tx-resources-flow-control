@@ -126,7 +126,7 @@ The goal is to bring rtw89 USB support to parity with the mature PCI implementat
 
 ---
 
-*This work was conducted as independent research, combining human insight with AI-assisted analysis to identify and fix real-world driver issues. The goal: arrive with solutions, not questions.*
+*This work was conducted as independent research to identify and fix real-world driver issues. The goal: arrive with solutions, not questions.*
 
 ---
 

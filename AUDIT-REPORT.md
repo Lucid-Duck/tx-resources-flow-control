@@ -84,31 +84,36 @@ rtw89_usb_disconnect()
 
 ## Key Guarantees
 
-1. **USB Core Guarantee:** Once `usb_submit_urb()` returns 0, the completion callback is called exactly once, regardless of success/failure/cancellation.
+1. **USB Core Guarantee:** Once `usb_submit_urb()` succeeds, the completion handler will be invoked exactly once for that URB, including on unlink/kill/disconnect paths.
 
-2. **Increment Location:** Only in `else` branch after confirmed successful submit.
+2. **Increment Location:** BEFORE `usb_submit_urb()` call, with rollback on failure. This prevents race with immediate completion.
 
-3. **Decrement Location:** Unconditional in completion callback, runs for all paths.
+3. **Decrement Location:** Uses `atomic_dec_return()` in completion callback - runs for all paths and atomically detects underflow.
 
 4. **No Other Modifiers:** `grep` confirms no other code modifies `tx_inflight`.
+
+5. **Init Ordering:** Counter reset (`atomic_set(..., 0)`) only occurs in `rtw89_usb_init_tx()` during probe, before any URB can be submitted.
 
 ---
 
 ## Debug Instrumentation Added
 
-The following checks were added to detect any accounting bugs at runtime:
+The following checks detect accounting bugs at runtime:
 
 ```c
-// In check_and_reclaim_tx_resource():
+// In check_and_reclaim_tx_resource() - defensive checks:
 if (unlikely(inflight < 0))
     rtw89_warn(..., "UNDERFLOW");
 if (unlikely(inflight > MAX))
     rtw89_warn(..., "OVERFLOW");
 
-// In completion callback:
-if (unlikely(atomic_read(...) <= 0))
-    rtw89_warn(..., "decrement when inflight <= 0");
+// In completion callback - atomic invariant (strongest check):
+int val = atomic_dec_return(&rtwusb->tx_inflight[txcb->txch]);
+if (unlikely(val < 0))
+    rtw89_warn(..., "UNDERFLOW inflight=%d", val);
 ```
+
+The `atomic_dec_return()` pattern catches underflow at the exact moment it occurs, with no race window.
 
 ---
 
@@ -265,6 +270,53 @@ rtw89_usb_ops_tx_kick_off()
 | 3/3  | 30s      | 0         | 0        | NONE     |
 
 **Conclusion:** Race condition fix **VERIFIED WORKING**. Zero warnings across 90 seconds of sustained high-throughput TX.
+
+---
+
+## Real TCP Upload Test (2026-01-11)
+
+**Test Setup:**
+- 10MB HTTP POST upload to httpbin.org via USB adapter
+- Production max URBs: 32
+
+**Results:**
+```
+Uploaded: 10485760 bytes
+Time: 23.07s
+Speed: 454KB/s average
+
+BACKPRESSURE events observed:
+[44639.800695] TX flow ctrl: BACKPRESSURE ch=0 inflight=32
+[44640.423148] TX flow ctrl: BACKPRESSURE ch=0 inflight=32
+... (multiple events at max capacity)
+```
+
+**Verification:**
+- Real TCP traffic (not just ICMP)
+- Backpressure correctly triggered at production max (32)
+- **Zero underflow/overflow** - accounting correct under sustained load
+- Upload completed successfully
+
+---
+
+## hcxdumptool Regression Test (2026-01-11)
+
+**Test Setup:**
+- Monitor mode capture with active beacon
+- 15 second capture on channels 1, 6, 11
+
+**Results:**
+```
+653 Packet(s) captured by kernel
+0 Packet(s) dropped by kernel
+```
+
+**Verification:**
+- **0 packets dropped** - no "broken driver" errors
+- No dmesg errors during capture
+- Successful capture file generated
+
+**Conclusion:** The original "broken driver" symptom from hcxdumptool is **RESOLVED**.
 
 ---
 

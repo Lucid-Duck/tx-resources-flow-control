@@ -43,3 +43,52 @@ Plug-in time: Mon 12 Jan 2026 01:53:03 PM PST
 Recovery: Device detected, WiFi reconnected, ping OK
 Result: PASS
 
+=== Round 6/10 ===
+Unplug time: Mon 12 Jan 2026 01:54:34 PM PST
+dmesg: USB disconnect clean
+Kernel complaints: NONE
+Plug-in time: Mon 12 Jan 2026 01:55:18 PM PST
+Recovery: Device detected, WiFi reconnected, ping OK
+Result: PASS
+
+=== Round 7/10 ===
+Unplug time: Mon 12 Jan 2026 06:43:31 PM PST
+dmesg: USB disconnect clean
+Kernel complaints: NONE
+Plug-in time: Mon 12 Jan 2026 06:44:02 PM PST
+Recovery: Device detected, WiFi reconnected, ping OK
+Result: PASS
+
+=== Round 8/10 ===
+Unplug time: Mon 12 Jan 2026 06:44:57 PM PST
+dmesg: USB disconnect clean
+Kernel complaints: NONE
+Plug-in time: Mon 12 Jan 2026 06:46:16 PM PST
+Recovery: Device detected, WiFi needed extra reconnect, ping OK
+Result: PASS
+
+=== Round 9/10 ===
+Unplug time: Mon 12 Jan 2026 06:46:47 PM PST
+dmesg: USB disconnect clean
+Kernel complaints: NONE
+Plug-in time: Mon 12 Jan 2026 06:47:26 PM PST
+Recovery: Device detected, WiFi reconnected, ping OK
+Result: PASS
+
+=== Round 10/10 ===
+Unplug time: Mon 12 Jan 2026 06:48:11 PM PST
+dmesg: USB disconnect clean
+Kernel complaints: NONE
+Plug-in time: Mon 12 Jan 2026 06:49:07 PM PST
+Recovery: Device detected, WiFi needed extra reconnect, ping OK
+Result: PASS
+
+=== FINAL SUMMARY ===
+Total rounds: 10
+Passed: 10
+Failed: 0
+Kernel panics: 0
+UNDERFLOW warnings: 0
+OVERFLOW warnings: 0
+
+VERDICT: ALL TESTS PASSED

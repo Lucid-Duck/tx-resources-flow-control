@@ -11,7 +11,7 @@ Original bug:
 2. USB core completes immediately
 3. Completion callback calls atomic_dec()
 4. Submitting code resumes and calls atomic_inc()
-5. Result: inflight goes 0 → -1 → 0 (race!)
+5. Result: inflight goes 0 -> -1 -> 0 (race!)
 
 Fix: Pre-increment before submit, rollback on failure.
 

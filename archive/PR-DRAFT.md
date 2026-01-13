@@ -12,9 +12,7 @@
 
 ### Summary
 
-This patch fixes a mac80211 TX flow control contract violation in `rtw89_usb_ops_check_and_reclaim_tx_resource()`. The current implementation returns a hardcoded placeholder instead of actual TX resource availability, preventing mac80211 from applying backpressure.
-
-This change ensures mac80211 backpressure accurately reflects USB TX URB availability.
+This restores correct mac80211 TX backpressure semantics for rtw89 USB.
 
 ### The Bug
 
@@ -50,19 +48,22 @@ When inflight reaches the maximum (32 per channel), the function returns 0, sign
 
 ---
 
-## Patches
+## Patches (For Merge)
 
 | # | Patch | Description |
 |---|-------|-------------|
 | 1 | `usb: implement TX flow control` | Core implementation: atomic counters, increment/decrement, return calculation |
-| 2 | `usb: add debug instrumentation` | Debug warnings for validation (remove or gate for production) |
 | 3 | `usb: fix CH12 tracking skip` | Exclude firmware command channel from tracking |
 | 4 | `usb: fix increment race condition` | Move increment before submit to prevent race |
 | 5 | `usb: use atomic_dec_return()` | Race-free underflow detection |
 
-**Note**: Patches 1, 3, 4, 5 are intended for merge. Patch 2 is debug instrumentation used during development to verify accounting correctness; it should be removed or gated behind `CONFIG_RTW89_DEBUG` for production.
+For final submission, these four patches can be squashed into a single commit.
 
-For final upstream submission, patches could be squashed into a single clean commit.
+### Not For Merge
+
+| # | Patch | Purpose |
+|---|-------|---------|
+| 2 | `usb: add debug instrumentation` | Used during development to verify accounting correctness. Not intended for upstream. |
 
 ---
 

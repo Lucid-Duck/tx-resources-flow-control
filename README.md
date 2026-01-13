@@ -12,14 +12,14 @@ This work fixes a mac80211 TX flow control contract violation in the rtw89 USB d
 return 42; /* TODO some kind of calculation? */
 ```
 
-mac80211 relies on this function to apply TX backpressure. Returning a constant non-zero value prevents throttling, causing USB URBs to accumulate faster than they complete.
+mac80211 relies on this function to apply TX backpressure. When drivers honestly report TX capacity, mac80211 can throttle submission when resources are exhausted. Returning a constant non-zero value defeats this mechanism, causing USB URBs to accumulate faster than they complete.
 
 **Symptoms:**
-- Tool-visible errors (e.g., hcxdumptool "broken driver")
-- Degraded capture under sustained TX load
-- USB instability during high-throughput operations
+- Monitor mode tools report driver errors
+- Degraded performance under sustained TX load
+- USB subsystem instability during high-throughput operations
 
-This is a **transport correctness issue**, not a tool-specific bug.
+This is a **mac80211 contract violation**, not a tool-specific or use-case-specific bug.
 
 ---
 
@@ -53,12 +53,12 @@ Query Path:
 | # | Patch | Purpose |
 |---|-------|---------|
 | 0001 | Implement basic accounting | Core `tx_inflight[]` counters and flow control logic |
-| 0002 | Add debug instrumentation | Temporary warnings for backpressure/underflow events |
+| 0002 | Add debug instrumentation | Temporary warnings for validation (not for upstream merge) |
 | 0003 | Correct CH12 handling | Exclude firmware command channel from tracking |
 | 0004 | Fix submit/completion race | Pre-increment before submit to prevent race |
 | 0005 | Use `atomic_dec_return()` | Race-free underflow detection in completion path |
 
-Patches 0002-0005 exist to guarantee correctness under concurrency and teardown, not to add features.
+Patches 0003-0005 fix correctness issues discovered during validation. Patch 0002 is debug instrumentation used to verify accounting; it should be removed or gated behind `CONFIG_RTW89_DEBUG` for production.
 
 ---
 
@@ -90,7 +90,7 @@ Same hardware (RTL8832AU), same environment, same tool:
 
 ## Scope and Non-Goals
 
-This work addresses **TX flow control accounting only**.
+This patch implements TX backpressure accounting only. It does not claim to fix all rtw89 USB issues.
 
 It does **not** address:
 - RX path behavior

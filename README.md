@@ -42,7 +42,7 @@ Implement proper per-channel URB tracking so the driver can signal backpressure 
 
 ---
 
-## Quick Context for New AI Sessions
+## Quick Context
 
 1. **Hardware:** D-Link DWA-X1850 (RTL8832AU, WiFi 6)
 2. **Driver:** rtw89 (morrownr out-of-tree, targets mainline)
@@ -85,8 +85,6 @@ This project operates independently until we have:
 - Comprehensive documentation
 - Proven results
 
-Only then do we engage with upstream maintainers. The goal is twofold:
-1. Contribute meaningful fixes to the Linux WiFi ecosystem
-2. Demonstrate what focused AI+human collaboration can achieve
+Only then do we engage with upstream maintainers. The goal is to contribute meaningful fixes to the Linux WiFi ecosystem.
 
 No RFCs. No "what do you think?" No permission-seeking. Just results.

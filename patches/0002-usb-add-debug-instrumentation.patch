@@ -1,3 +1,25 @@
+From: Lucid-Duck <uglytoiletduck@gmail.com>
+Subject: [PATCH 2/5] usb: add debug instrumentation for TX flow control
+
+Add temporary debug warnings to validate TX flow control accounting:
+
+- UNDERFLOW warning if counter goes negative (indicates accounting bug)
+- OVERFLOW warning if counter exceeds max (indicates missed decrement)
+- BACKPRESSURE debug message when mac80211 is throttled
+
+These warnings were used to verify that every atomic_inc() has exactly
+one corresponding atomic_dec() across all code paths including error
+handling and hot-unplug scenarios.
+
+NOTE: This patch is for development/validation only. For production,
+these warnings should be removed or gated behind CONFIG_RTW89_DEBUG.
+
+Signed-off-by: Lucid-Duck <uglytoiletduck@gmail.com>
+---
+ usb.c | 45 +++++++++++++++++++++++++++++++++++++++++++--
+ usb.h |  6 ++++++
+ 2 files changed, 49 insertions(+), 2 deletions(-)
+
 diff --git a/usb.c b/usb.c
 index eb489df..43d9685 100644
 --- a/usb.c
@@ -12,7 +34,7 @@ index eb489df..43d9685 100644
 +	/* Firmware command channel doesn't use this tracking */
  	if (txch == RTW89_TXCH_CH12)
  		return 1;
- 
+
 -	return 42; /* TODO some kind of calculation? */
 +	inflight = atomic_read(&rtwusb->tx_inflight[txch]);
 +
@@ -33,7 +55,7 @@ index eb489df..43d9685 100644
 +
 +	return RTW89_USB_MAX_TX_URBS_PER_CH - inflight;
  }
- 
+
  static void rtw89_usb_write_port_complete(struct urb *urb)
  {
  	struct rtw89_usb_tx_ctrl_block *txcb = urb->context;
@@ -45,7 +67,7 @@ index eb489df..43d9685 100644
 @@ -234,6 +256,13 @@ static void rtw89_usb_write_port_complete(struct urb *urb)
  		break;
  	}
- 
+
 +	/* DEBUG: Check for underflow before decrement */
 +	if (unlikely(atomic_read(&rtwusb->tx_inflight[txcb->txch]) <= 0))
 +		rtw89_warn(rtwdev, "TX flow ctrl: decrement when inflight=%d ch=%d urb_status=%d\n",
@@ -55,7 +77,7 @@ index eb489df..43d9685 100644
 +	atomic_dec(&rtwusb->tx_inflight[txcb->txch]);
  	kfree(txcb);
  }
- 
+
 @@ -321,6 +350,8 @@ static void rtw89_usb_ops_tx_kick_off(struct rtw89_dev *rtwdev, u8 txch)
  			skb_dequeue(&txcb->tx_ack_queue);
  			kfree(txcb);
@@ -68,14 +90,14 @@ index eb489df..43d9685 100644
 @@ -694,8 +725,10 @@ static void rtw89_usb_init_tx(struct rtw89_dev *rtwdev)
  	struct rtw89_usb *rtwusb = rtw89_usb_priv(rtwdev);
  	int i;
- 
+
 -	for (i = 0; i < ARRAY_SIZE(rtwusb->tx_queue); i++)
 +	for (i = 0; i < ARRAY_SIZE(rtwusb->tx_queue); i++) {
  		skb_queue_head_init(&rtwusb->tx_queue[i]);
 +		atomic_set(&rtwusb->tx_inflight[i], 0);
 +	}
  }
- 
+
  static void rtw89_usb_deinit_tx(struct rtw89_dev *rtwdev)
 diff --git a/usb.h b/usb.h
 index 9f554b5..1459122 100644
@@ -84,7 +106,7 @@ index 9f554b5..1459122 100644
 @@ -21,6 +21,9 @@
  #define RTW89_MAX_BULKIN_NUM		2
  #define RTW89_MAX_BULKOUT_NUM		7
- 
+
 +/* TX flow control: max in-flight URBs per channel */
 +#define RTW89_USB_MAX_TX_URBS_PER_CH	32
 +
@@ -93,11 +115,11 @@ index 9f554b5..1459122 100644
  	u32 usb_wlan0_1;
 @@ -67,6 +70,9 @@ struct rtw89_usb {
  	struct usb_anchor tx_submitted;
- 
+
  	struct sk_buff_head tx_queue[RTW89_TXCH_NUM];
 +
 +	/* TX flow control: track in-flight URBs per channel */
 +	atomic_t tx_inflight[RTW89_TXCH_NUM];
  };
- 
+
  static inline struct rtw89_usb *rtw89_usb_priv(struct rtw89_dev *rtwdev)

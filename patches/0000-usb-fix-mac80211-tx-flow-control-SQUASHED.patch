@@ -1,0 +1,128 @@
+From: Lucid-Duck <uglytoiletduck@gmail.com>
+Subject: [PATCH] usb: fix mac80211 TX flow control contract violation
+
+rtw89_usb_ops_check_and_reclaim_tx_resource() returns a hardcoded
+placeholder value (42) instead of actual TX resource availability.
+This violates mac80211's flow control contract, preventing backpressure
+and causing uncontrolled URB accumulation under sustained TX load.
+
+Fix by adding per-channel atomic counters (tx_inflight[]) that track
+in-flight URBs:
+
+- Increment before usb_submit_urb() with rollback on failure
+- Decrement in completion callback
+- Return (MAX_URBS - inflight) to mac80211, or 0 when at capacity
+- Exclude firmware command channel (CH12) from tracking
+
+The pre-increment pattern prevents a race condition where the USB core
+completes the URB (possibly on another CPU) before the submitting code
+increments the counter.
+
+Tested on D-Link DWA-X1850 (RTL8832AU) with:
+- 100-iteration stress test (flood ping): PASS
+- 50-iteration teardown test (rmmod/modprobe under load): PASS
+- 10x hot-unplug during active TX: PASS
+- 30-minute soak test: PASS, counters balanced at idle
+
+Signed-off-by: Lucid-Duck <uglytoiletduck@gmail.com>
+---
+ usb.c | 26 +++++++++++++++++++++-----
+ usb.h |  6 ++++++
+ 2 files changed, 27 insertions(+), 5 deletions(-)
+
+diff --git a/usb.c b/usb.c
+index eb489df..faafa3c 100644
+--- a/usb.c
++++ b/usb.c
+@@ -166,16 +166,25 @@ static u32
+ rtw89_usb_ops_check_and_reclaim_tx_resource(struct rtw89_dev *rtwdev,
+ 					    u8 txch)
+ {
++	struct rtw89_usb *rtwusb = rtw89_usb_priv(rtwdev);
++	int inflight;
++
++	/* Firmware command channel is not tracked */
+ 	if (txch == RTW89_TXCH_CH12)
+ 		return 1;
+ 
+-	return 42; /* TODO some kind of calculation? */
++	inflight = atomic_read(&rtwusb->tx_inflight[txch]);
++	if (inflight >= RTW89_USB_MAX_TX_URBS_PER_CH)
++		return 0;
++
++	return RTW89_USB_MAX_TX_URBS_PER_CH - inflight;
+ }
+ 
+ static void rtw89_usb_write_port_complete(struct urb *urb)
+ {
+ 	struct rtw89_usb_tx_ctrl_block *txcb = urb->context;
+ 	struct rtw89_dev *rtwdev = txcb->rtwdev;
++	struct rtw89_usb *rtwusb = rtw89_usb_priv(rtwdev);
+ 	struct ieee80211_tx_info *info;
+ 	struct rtw89_txwd_body *txdesc;
+ 	struct sk_buff *skb;
+@@ -234,6 +243,10 @@ static void rtw89_usb_write_port_complete(struct urb *urb)
+ 		break;
+ 	}
+ 
++	/* Decrement in-flight counter (skip firmware command channel) */
++	if (txcb->txch != RTW89_TXCH_CH12)
++		atomic_dec(&rtwusb->tx_inflight[txcb->txch]);
++
+ 	kfree(txcb);
+ }
+ 
+@@ -311,9 +324,17 @@ static void rtw89_usb_ops_tx_kick_off(struct rtw89_dev *rtwdev, u8 txch)
+ 
+ 		skb_queue_tail(&txcb->tx_ack_queue, skb);
+ 
++		/* Increment BEFORE submit to avoid race with completion */
++		if (txch != RTW89_TXCH_CH12)
++			atomic_inc(&rtwusb->tx_inflight[txch]);
++
+ 		ret = rtw89_usb_write_port(rtwdev, txch, skb->data, skb->len,
+ 					   txcb);
+ 		if (ret) {
++			/* Rollback increment on failure */
++			if (txch != RTW89_TXCH_CH12)
++				atomic_dec(&rtwusb->tx_inflight[txch]);
++
+ 			if (ret != -ENODEV)
+ 				rtw89_err(rtwdev, "write port txch %d failed: %d\n",
+ 					  txch, ret);
+@@ -694,8 +715,10 @@ static void rtw89_usb_init_tx(struct rtw89_dev *rtwdev)
+ 	struct rtw89_usb *rtwusb = rtw89_usb_priv(rtwdev);
+ 	int i;
+ 
+-	for (i = 0; i < ARRAY_SIZE(rtwusb->tx_queue); i++)
++	for (i = 0; i < ARRAY_SIZE(rtwusb->tx_queue); i++) {
+ 		skb_queue_head_init(&rtwusb->tx_queue[i]);
++		atomic_set(&rtwusb->tx_inflight[i], 0);
++	}
+ }
+ 
+ static void rtw89_usb_deinit_tx(struct rtw89_dev *rtwdev)
+diff --git a/usb.h b/usb.h
+index 9f554b5..1459122 100644
+--- a/usb.h
++++ b/usb.h
+@@ -21,6 +21,9 @@
+ #define RTW89_MAX_BULKIN_NUM		2
+ #define RTW89_MAX_BULKOUT_NUM		7
+ 
++/* TX flow control: max in-flight URBs per channel */
++#define RTW89_USB_MAX_TX_URBS_PER_CH	32
++
+ struct rtw89_usb_info {
+ 	u32 usb_host_request_2;
+ 	u32 usb_wlan0_1;
+@@ -67,6 +70,9 @@ struct rtw89_usb {
+ 	struct usb_anchor tx_submitted;
+ 
+ 	struct sk_buff_head tx_queue[RTW89_TXCH_NUM];
++
++	/* TX flow control: track in-flight URBs per channel */
++	atomic_t tx_inflight[RTW89_TXCH_NUM];
+ };
+ 
+ static inline struct rtw89_usb *rtw89_usb_priv(struct rtw89_dev *rtwdev)

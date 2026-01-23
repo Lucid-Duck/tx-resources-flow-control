@@ -1,0 +1,47 @@
+From: Lucid-Duck <uglytoiletduck@gmail.com>
+Subject: [PATCH 5/5] usb: use atomic_dec_return() for underflow detection
+
+Replace the racy read-then-decrement pattern with atomic_dec_return()
+which catches underflow at the exact moment it occurs.
+
+The previous pattern had a TOCTOU race:
+  if (atomic_read(...) <= 0)  // check
+      warn();
+  atomic_dec(...);            // decrement
+
+The new pattern is race-free:
+  int val = atomic_dec_return(...);
+  if (val < 0)
+      warn();
+
+This follows kernel best practices for detecting counter underflow
+in completion callbacks that may run on different CPUs.
+
+Signed-off-by: Lucid-Duck <uglytoiletduck@gmail.com>
+---
+ rtw89/usb.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/rtw89/usb.c b/rtw89/usb.c
+index a7d9f21..b8c3e42 100644
+--- a/rtw89/usb.c
++++ b/rtw89/usb.c
+@@ -258,13 +258,11 @@ static void rtw89_usb_write_port_complete(struct urb *urb)
+
+ 	/* Skip tracking for firmware command channel (handled specially) */
+ 	if (txcb->txch != RTW89_TXCH_CH12) {
+-		/* DEBUG: Check for underflow before decrement */
+-		if (unlikely(atomic_read(&rtwusb->tx_inflight[txcb->txch]) <= 0))
+-			rtw89_warn(rtwdev, "TX flow ctrl: decrement when inflight=%d ch=%d urb_status=%d\n",
+-				   atomic_read(&rtwusb->tx_inflight[txcb->txch]),
+-				   txcb->txch, urb->status);
++		int val = atomic_dec_return(&rtwusb->tx_inflight[txcb->txch]);
+
+-		atomic_dec(&rtwusb->tx_inflight[txcb->txch]);
++		/* Atomic invariant: if val < 0, we have underflow */
++		if (unlikely(val < 0))
++			rtw89_warn(rtwdev, "TX flow ctrl: UNDERFLOW inflight=%d ch=%d urb_status=%d\n",
++				   val, txcb->txch, urb->status);
+ 	}
+ 	kfree(txcb);
+ }

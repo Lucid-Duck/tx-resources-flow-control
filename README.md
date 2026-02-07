@@ -1,6 +1,10 @@
 # rtw89 USB TX Flow Control Fix
 
-This work fixes a mac80211 TX flow control contract violation in the rtw89 USB driver, where available TX resources were reported inaccurately, preventing backpressure and causing USB TX overcommit under load.
+Fixes a mac80211 TX flow control contract violation in the rtw89 USB driver, where available TX resources were reported inaccurately, preventing backpressure and causing USB TX overcommit under load.
+
+**Author:** Lucid Duck &lt;lucid_duck@justthetip.ca&gt;
+**Status:** Submitted to linux-wireless ([v2 on lore](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/)) — awaiting maintainer response
+**Hardware:** D-Link DWA-X1850 (RTL8832AU) on kernel 6.18.3, Fedora 43
 
 ---
 
@@ -103,6 +107,32 @@ It does **not** address:
 
 ---
 
+## Throughput (iperf3)
+
+Measured before and after the patch on the same hardware:
+
+```
+                     Unpatched -> Patched
+USB3 5GHz:
+  Download:          494 -> 709 Mbps (+44%)
+  Upload:            757 -> 753 Mbps (same)
+  Retransmits:       8 -> 1 (-88%)
+
+USB3 2.4GHz:
+  Download:          54 -> 68 Mbps (+25%)
+  Upload:            128 -> 137 Mbps (+6%)
+
+USB2 5GHz:
+  Download:          196 -> 225 Mbps (+15%)
+  Upload:            255 -> 255 Mbps (same)
+
+USB2 2.4GHz:
+  Download:          123 -> 131 Mbps (+6%)
+  Upload:            153 -> 152 Mbps (same)
+```
+
+---
+
 ## Hardware Tested
 
 - D-Link DWA-X1850 (RTL8832AU, USB ID 2001:3321)
@@ -112,17 +142,26 @@ Additional testing on RTL8852BU and RTL8851BU devices would be valuable.
 
 ---
 
+## Mailing List
+
+- **v1:** [2026-01-25](https://lore.kernel.org/linux-wireless/20260125221943.36001-1-lucid_duck@justthetip.ca/) — reviewed by Ping-Ke Shih (Realtek), Bitterblue Smith
+- **v2:** [2026-01-29](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/) — addressed reviewer feedback, added test results
+- Awaiting maintainer response
+
+---
+
 ## Files
 
 ```
 patches/
-  0001-usb-implement-tx-flow-control.patch
-  0002-usb-add-debug-instrumentation.patch
-  0003-usb-fix-ch12-tracking-skip.patch
-  0004-usb-fix-increment-race-condition.patch
+  0000-usb-fix-mac80211-tx-flow-control-SQUASHED.patch   # Single squashed commit
+  0001-usb-implement-tx-flow-control.patch                # Core accounting
+  0002-usb-add-debug-instrumentation.patch                # Debug only (not for merge)
+  0003-usb-fix-ch12-tracking-skip.patch                   # Exclude firmware channel
+  0004-usb-fix-increment-race-condition.patch              # Pre-increment race fix
   0005-usb-use-atomic_dec_return-for-underflow-detection.patch
 docs/
-  testing-summary.md
+  testing-summary.md                                       # Full verification results
 ```
 
 ---

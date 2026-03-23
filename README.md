@@ -3,8 +3,8 @@
 Fixes a mac80211 TX flow control contract violation in the rtw89 USB driver, where available TX resources were reported inaccurately, preventing backpressure and causing USB TX overcommit under load.
 
 **Author:** Lucid Duck &lt;lucid_duck@justthetip.ca&gt;
-**Status:** Submitted to linux-wireless ([v2 on lore](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/)) — awaiting maintainer response
-**Hardware:** D-Link DWA-X1850 (RTL8832AU) on kernel 6.18.3, Fedora 43
+**Status:** v3 sent to linux-wireless on 2026-03-23 -- awaiting maintainer response
+**Hardware:** D-Link DWA-X1850 (RTL8832AU) on kernel 6.19.8, Fedora 43
 
 ---
 
@@ -144,9 +144,11 @@ Additional testing on RTL8852BU and RTL8851BU devices would be valuable.
 
 ## Mailing List
 
-- **v1:** [2026-01-25](https://lore.kernel.org/linux-wireless/20260125221943.36001-1-lucid_duck@justthetip.ca/) — reviewed by Ping-Ke Shih (Realtek), Bitterblue Smith
-- **v2:** [2026-01-29](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/) — addressed reviewer feedback, added test results
-- Awaiting maintainer response
+- **v1:** [2026-01-25](https://lore.kernel.org/linux-wireless/20260125221943.36001-1-lucid_duck@justthetip.ca/) -- reviewed by Ping-Ke Shih (Realtek), Bitterblue Smith
+- **v2:** [2026-01-29](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/) -- addressed reviewer feedback, added test results
+- **Reply to Ping-Ke's v2 review:** 2026-03-23 (Message-ID: `20260323233334.158678-1-lucid_duck@justthetip.ca`) -- comprehensive test data addressing uplink, URB scaling, small packets, multi-stream, and soak tests
+- **v3:** 2026-03-23 (Message-ID: `20260323233347.158745-1-lucid_duck@justthetip.ca`) -- MAX_TX_URBS changed from 32 to 64, comments removed, test data in commit message. Sent via git send-email (now working on Fedora 43).
+- Awaiting Ping-Ke response to v3
 
 ---
 

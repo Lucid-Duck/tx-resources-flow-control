@@ -3,7 +3,7 @@
 Fixes a mac80211 TX flow control contract violation in the rtw89 USB driver, where available TX resources were reported inaccurately, preventing backpressure and causing USB TX overcommit under load.
 
 **Author:** Lucid Duck &lt;lucid_duck@justthetip.ca&gt;
-**Status:** v3 sent to linux-wireless on 2026-03-23 -- awaiting maintainer response
+**Status:** **Merged to mainline** as commit [`80119a77e5b0`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=80119a77e5b0) on 2026-04-02. Acked-by + Signed-off-by: Ping-Ke Shih (Realtek rtw89 maintainer). Reported-by: morrownr.
 **Hardware:** D-Link DWA-X1850 (RTL8832AU) on kernel 6.19.8, Fedora 43
 
 ---
@@ -52,17 +52,19 @@ Query Path:
 
 ---
 
-## Patch Series
+## Patch History
 
-| # | Patch | Purpose |
-|---|-------|---------|
-| 0001 | Implement basic accounting | Core `tx_inflight[]` counters and flow control logic |
-| 0002 | Add debug instrumentation | Temporary warnings for validation (not for upstream merge) |
-| 0003 | Correct CH12 handling | Exclude firmware command channel from tracking |
-| 0004 | Fix submit/completion race | Pre-increment before submit to prevent race |
-| 0005 | Use `atomic_dec_return()` | Race-free underflow detection in completion path |
+The repo captures the iterative development across five local patches. The squashed v4 posted to linux-wireless on 2026-04-02 (Message-ID `20260402052216.207858-1-lucid_duck@justthetip.ca`) is what Ping-Ke Shih Acked and applied to the rtw89 tree. That single commit is what landed in mainline as `80119a77e5b0`.
 
-Patches 0003-0005 fix correctness issues discovered during validation. Patch 0002 is debug instrumentation used to verify accounting; it should be removed or gated behind `CONFIG_RTW89_DEBUG` for production.
+| Stage | Purpose |
+|-------|---------|
+| Basic accounting | Core `tx_inflight[]` counters and flow control logic |
+| Debug instrumentation | Temporary warnings used for validation (removed before merge) |
+| CH12 handling | Exclude firmware command channel from tracking |
+| Submit/completion race fix | Pre-increment before submit to prevent race |
+| `atomic_dec_return` in completion | Race-free underflow detection |
+
+The final merged commit also raised `MAX_TX_URBS` from 64 to 128 per channel to provide headroom for RTL8832CU at 160 MHz bandwidth.
 
 ---
 
@@ -147,8 +149,9 @@ Additional testing on RTL8852BU and RTL8851BU devices would be valuable.
 - **v1:** [2026-01-25](https://lore.kernel.org/linux-wireless/20260125221943.36001-1-lucid_duck@justthetip.ca/) -- reviewed by Ping-Ke Shih (Realtek), Bitterblue Smith
 - **v2:** [2026-01-29](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/) -- addressed reviewer feedback, added test results
 - **Reply to Ping-Ke's v2 review:** 2026-03-23 (Message-ID: `20260323233334.158678-1-lucid_duck@justthetip.ca`) -- comprehensive test data addressing uplink, URB scaling, small packets, multi-stream, and soak tests
-- **v3:** 2026-03-23 (Message-ID: `20260323233347.158745-1-lucid_duck@justthetip.ca`) -- MAX_TX_URBS changed from 32 to 64, comments removed, test data in commit message. Sent via git send-email (now working on Fedora 43).
-- Awaiting Ping-Ke response to v3
+- **v3:** 2026-03-23 (Message-ID: `20260323233347.158745-1-lucid_duck@justthetip.ca`) -- MAX_TX_URBS changed from 32 to 64, comments removed, test data in commit message
+- **v4 (final):** 2026-04-02 (Message-ID: `20260402052216.207858-1-lucid_duck@justthetip.ca`, [patch.msgid.link](https://patch.msgid.link/20260402052216.207858-1-lucid_duck@justthetip.ca)) -- `MAX_TX_URBS` raised to 128 for RTL8832CU 160 MHz headroom. Acked-by: Ping-Ke Shih.
+- **Merged:** 2026-04-02 as mainline commit [`80119a77e5b0`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=80119a77e5b0).
 
 ---
 

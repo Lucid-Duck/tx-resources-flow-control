@@ -148,7 +148,7 @@ Additional testing on RTL8852BU and RTL8851BU devices would be valuable.
 
 - **v1:** [2026-01-25](https://lore.kernel.org/linux-wireless/20260125221943.36001-1-lucid_duck@justthetip.ca/) -- reviewed by Ping-Ke Shih (Realtek), Bitterblue Smith
 - **v2:** [2026-01-29](https://lore.kernel.org/linux-wireless/20260130040252.67686-1-lucid_duck@justthetip.ca/) -- addressed reviewer feedback, added test results
-- **Reply to Ping-Ke's v2 review:** 2026-03-23 (Message-ID: `20260323233334.158678-1-lucid_duck@justthetip.ca`) -- comprehensive test data addressing uplink, URB scaling, small packets, multi-stream, and soak tests
+- **Reply to Ping-Ke's v2 review:** 2026-03-23 (Message-ID: `20260323233334.158678-1-lucid_duck@justthetip.ca`) -- test data addressing uplink, URB scaling, small packets, multi-stream, and soak tests
 - **v3:** 2026-03-23 (Message-ID: `20260323233347.158745-1-lucid_duck@justthetip.ca`) -- MAX_TX_URBS changed from 32 to 64, comments removed, test data in commit message
 - **v4 (final):** 2026-04-02 (Message-ID: `20260402052216.207858-1-lucid_duck@justthetip.ca`, [patch.msgid.link](https://patch.msgid.link/20260402052216.207858-1-lucid_duck@justthetip.ca)) -- `MAX_TX_URBS` raised to 128 for RTL8832CU 160 MHz headroom. Acked-by: Ping-Ke Shih.
 - **Merged:** 2026-04-02 as mainline commit [`80119a77e5b0`](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=80119a77e5b0).
